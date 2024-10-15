@@ -1,0 +1,38 @@
+name: CI Pipeline
+
+# Specify the events that trigger the workflow
+on:
+  push:
+    branches:
+      - main  # Runs the workflow on every push to the main branch
+  pull_request:
+    branches:
+      - main  # Runs the workflow on every pull request targeting the main branch
+
+# Define the job(s) for the workflow
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use an Ubuntu environment
+
+    steps:
+    # Step 1: Checkout the repository code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Step 4: Run tests
+    - name: Run tests
+      run: npm test
+
+    # Step 5: Build the project (if applicable)
+    - name: Build the project
+      run: npm run build
